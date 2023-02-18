@@ -1,7 +1,8 @@
-function addArtist(res) {
-    return res.status(200)
-   }
-
-module.exports = {
-    addArtist
+const createArtist = (req, res) => {
+    res.sendStatus(201);
 }
+
+module.exports = { createArtist }
+
+
+
