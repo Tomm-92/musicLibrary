@@ -7,5 +7,6 @@ router.post('/', artistController.createArtist);
 router.get('/', artistController.read);
 router.get('/:id', artistController.readById);
 router.put('/:id', artistController.updateArtist);
+router.patch('/:id', artistController.updateArtistPatch);
 
 module.exports = router;
