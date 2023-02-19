@@ -1,7 +1,7 @@
 const db = require('../db/index');
 
 
-exports.createArtist = async (req, res) => {
+const createArtist = async (req, res) => {
     const { name, genre } = req.body
   
     try {
@@ -13,7 +13,7 @@ exports.createArtist = async (req, res) => {
       }
     }
 
-    exports.read = async (req, res) => {
+  const read = async (req, res) => {
         try {
         const { rows } = await db.query('SELECT * FROM Artists')
         res.status(200).json(rows)
@@ -23,7 +23,7 @@ exports.createArtist = async (req, res) => {
           }
         }
 
-    exports.readById = async (req, res) => {
+    const readById = async (req, res) => {
         try {
                 const {id} = req.params 
                 const { rows: [artist] } = await db.query('SELECT * FROM Artists WHERE id = $1', [ id ])
@@ -37,5 +37,19 @@ exports.createArtist = async (req, res) => {
             }
     
 
+const updateArtist = async (req, res) => {
+  try {
+    const {id} = req.params
+    const {name, genre} = req.body
+    const { rows: [artist]} = await db.query('UPDATE Artists SET name = $1, genre = $2 WHERE id = $3 RETURNING *', [name, genre, id])
+    if (!artist) {
+      res.status(400).json({message: `artist ${id} does not exist`})
+    }
+    res.status(200).json(artist)
+  }
+  catch (err) {
+    res.status(500).json(err.message)
+  }
+}
 
-
+module.exports = { createArtist, read, readById, updateArtist}
