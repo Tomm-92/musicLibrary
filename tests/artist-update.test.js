@@ -50,7 +50,7 @@ describe('Update Artist', () => {
         });
       });
 
-     it('returns a 404 if the artist does not exist', async () => {
+      it('returns a 404 if the artist does not exist', async () => {
         const { status, body } = await request(app)
           .patch('/artists/999999999')
           .send({ name: 'something different', genre: 'rock' });
