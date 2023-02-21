@@ -1,8 +1,23 @@
 const db = require('../db/index');
 
-const createAlbum = (req, res) => {
-    res.sendStatus(201);
-}
+const createAlbum = async (req, res) => {
+    const { name, date } = req.body;
+   const { id } = req.params
+
+    try {
+      const {
+        rows: [album],
+      } = await db.query(
+        'INSERT INTO Albums (name, date, artistid) VALUES ($1, $2, $3) RETURNING *',
+        [name, date, id]
+      );
+      res.status(201).json(album);
+    } catch (err) {
+      res.status(500).json(err.message);
+    }
+  };
+
+
 
 module.exports = { createAlbum }
 
