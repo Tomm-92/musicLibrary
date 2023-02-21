@@ -1,8 +1,8 @@
 const express = require('express');
-const albumController = require('../controllers/albums');
+const albumsController = require('../controllers/albums');
 
 const router = express.Router();
 
-router.post('/artists/:id/albums', albumController.createAlbum)
+router.post('/:id/albums/', albumsController.createAlbum)
 
 module.exports = router;
