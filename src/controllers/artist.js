@@ -14,6 +14,8 @@ const createArtist = async (req, res) => {
   } catch (err) {
     res.status(500).json(err.message);
   }
+
+  console.log();
 };
 
 const read = async (req, res) => {
