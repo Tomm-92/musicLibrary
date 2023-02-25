@@ -15,9 +15,14 @@ describe('Update Album', () => {
         'INSERT INTO Artists (name, genre) VALUES( $1, $2) RETURNING *',
         ['Arctic Monkeys', 'rock']
       ),
+      db.query(
+        'INSERT INTO Artists (name, genre) VALUES ($1, $2) RETURNING *',
+        ['J Cole', 'Hip Hop']
+      ),
     ]);
     artists = artistData.map(({ rows }) => rows[0]);
     const artistid = artists[0].id;
+    const artistid1 = artists[1].id;
 
     albumData = await Promise.all([
       db.query(
@@ -26,7 +31,7 @@ describe('Update Album', () => {
       ),
       db.query(
         'INSERT INTO albums (name, date, artistid) VALUES( $1, $2,$3) RETURNING *',
-        ['AM', 2015, artistid]
+        ['AM', 2015, artistid1]
       ),
     ]);
     albums = albumData.map(({ rows }) => rows[0]);
@@ -40,7 +45,7 @@ describe('Update Album', () => {
         .send({
           name: 'something different',
           date: 2000,
-          artistid: album.artistid,
+          artistid: albums[1].artistid,
         });
 
       expect(status).to.equal(200);
@@ -49,7 +54,7 @@ describe('Update Album', () => {
         id: album.id,
         name: 'something different',
         date: 2000,
-        artistid: album.artistid,
+        artistid: albums[1].artistid,
       });
     });
     it('returns a 404 if the album does not exist', async () => {
@@ -66,7 +71,7 @@ describe('Update Album', () => {
           .send({
             name: 'something different',
             date: 2000,
-            artistid: album.artistid,
+            artistid: artists[1].id,
           });
 
         expect(status).to.equal(200);
@@ -75,7 +80,7 @@ describe('Update Album', () => {
           id: album.id,
           name: 'something different',
           date: 2000,
-          artistid: album.artistid,
+          artistid: artists[1].id,
         });
       });
 
@@ -85,7 +90,7 @@ describe('Update Album', () => {
           .send({
             name: 'something different',
             date: 2000,
-            artistid: album.artistid,
+            artistid: albums[1].artistid,
           });
 
         expect(status).to.equal(404);

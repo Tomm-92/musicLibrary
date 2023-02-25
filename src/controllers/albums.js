@@ -59,12 +59,12 @@ const deleteAlbum = async (req, res) => {
 const updatePut = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, date } = req.body;
+    const { name, date, artistid } = req.body;
     const {
       rows: [album],
     } = await db.query(
-      `UPDATE Albums SET name = $1, date = $2 WHERE id = $3 RETURNING *`,
-      [name, date, id]
+      `UPDATE Albums SET name = $1, date = $2, artistid = $3 WHERE id = $4 RETURNING *`,
+      [name, date, artistid, id]
     );
     if (!album) {
       res.status(404).json({ message: `album ${id} does not exist` });
