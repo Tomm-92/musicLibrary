@@ -75,32 +75,47 @@ const updatePut = async (req, res) => {
   }
 };
 
-const updatePatch = async (req, res) => {
+const updateAlbumPatch = async (req, res) => {
   const { id } = req.params;
-  const { name, genre } = req.body;
+  const { name, date, artistid } = req.body;
 
-  let query, params;
+  let query;
+  let params;
 
-  if (name && genre) {
-    query = `UPDATE artists SET name = $1, genre = $2 WHERE id = $3 RETURNING *`;
-    params = [name, genre, id];
-  } else if (!name) {
-    query = `UPDATE artists SET genre = $1 WHERE id = $2 RETURNING *`;
-    params = [genre, id];
-  } else if (!genre) {
-    query = `UPDATE artists SET name = $1 WHERE id = $2 RETURNING *`;
+  if (name && date && artistid) {
+    query =
+      'UPDATE Albums SET name = $1, date = $2, artistid = $3 WHERE id = $4 RETURNING *';
+    params = [name, date, artistid, id];
+  } else if (name && date) {
+    query = 'UPDATE albums SET name = $1, date = $2 WHERE id = $3 RETURNING *';
+    params = [name, date, id];
+  } else if (name && artistid) {
+    query =
+      'UPDATE albums SET name = $1, artistid = $2 WHERE id = $3 RETURNING *';
+    params = [name, artistid, id];
+  } else if (date && artistid) {
+    query =
+      'UPDATE albums SET date = $1, artistid = $2 WHERE id = $3 RETURNING *';
+    params = [date, artistid, id];
+  } else if (!name && !date) {
+    query = 'UPDATE albums SET artistid = $1 WHERE id = $2 RETURNING *';
+    params = [artistid, id];
+  } else if (!artistid && !date) {
+    query = 'UPDATE albums SET name = $1 WHERE id = $2 RETURNING *';
     params = [name, id];
+  } else if (!name && !artistid) {
+    query = 'UPDATE albums SET date = $1 WHERE id = $2 RETURNING *';
+    params = [date, id];
   }
 
   try {
     const {
-      rows: [artist],
+      rows: [album],
     } = await db.query(query, params);
-
-    if (!artist) {
-      res.status(404).json({ message: `artist ${id} does not exist` });
+    if (!album) {
+      res.status(404).json({ message: `album ${id} does not exist` });
     }
-    res.status(200).json(artist);
+    res.status(200).json(album);
   } catch (err) {
     res.status(500).json(err.message);
   }
@@ -112,5 +127,5 @@ module.exports = {
   readAlbumById,
   deleteAlbum,
   updatePut,
-  updatePatch,
+  updateAlbumPatch,
 };

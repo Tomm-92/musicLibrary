@@ -53,7 +53,7 @@ describe('Update Album', () => {
       });
     });
     it('returns a 404 if the artist does not exist', async () => {
-      const { status, body } = await request(app).get('/albums/123').send();
+      const { status, body } = await request(app).put('/albums/123').send();
 
       expect(status).to.equal(404);
       expect(body.message).to.equal('album 123 does not exist');
@@ -79,13 +79,17 @@ describe('Update Album', () => {
         });
       });
 
-      it('returns a 404 if the artist does not exist', async () => {
+      it('returns a 404 if the album does not exist', async () => {
         const { status, body } = await request(app)
           .patch('/albums/999999999')
-          .send({ name: 'something different', date: 2000 });
+          .send({
+            name: 'something different',
+            date: 2000,
+            artistid: album.artistid,
+          });
 
         expect(status).to.equal(404);
-        expect(body.message).to.equal('artist 999999999 does not exist');
+        expect(body.message).to.equal('album 999999999 does not exist');
       });
     });
   });
