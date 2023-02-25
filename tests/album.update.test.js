@@ -52,7 +52,7 @@ describe('Update Album', () => {
         artistid: album.artistid,
       });
     });
-    it('returns a 404 if the artist does not exist', async () => {
+    it('returns a 404 if the album does not exist', async () => {
       const { status, body } = await request(app).put('/albums/123').send();
 
       expect(status).to.equal(404);
