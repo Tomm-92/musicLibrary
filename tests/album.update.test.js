@@ -48,7 +48,7 @@ describe('Update Album', () => {
         .send({
           name: 'something different',
           date: 2000,
-          artistid: albums[1].artistid,
+          artistid: artists[1].id
         });
 
       expect(status).to.equal(200);
@@ -57,7 +57,7 @@ describe('Update Album', () => {
         id: album.id,
         name: 'something different',
         date: 2000,
-        artistid: albums[1].artistid,
+        artistid: artists[1].id
       });
     });
     it('returns a 404 if the album does not exist', async () => {
@@ -74,7 +74,7 @@ describe('Update Album', () => {
           .send({
             name: 'something different',
             date: 2000,
-            artistid: artists[1].id,
+            artistid: artists[1].id
           });
 
         expect(status).to.equal(200);
@@ -83,7 +83,7 @@ describe('Update Album', () => {
           id: album.id,
           name: 'something different',
           date: 2000,
-          artistid: artists[1].id,
+          artistid: artists[1].id
         });
       });
 
@@ -93,7 +93,7 @@ describe('Update Album', () => {
           .send({
             name: 'something different',
             date: 2000,
-            artistid: albums[1].artistid,
+            artistid: artists[1].id
           });
 
         expect(status).to.equal(404);
