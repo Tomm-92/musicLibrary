@@ -38,6 +38,9 @@ describe('Update Album', () => {
     album = albums[0];
   });
 
+  // Hi Stu, I have tried to set up this before each so I can test that the artistid foreign key can also be changed.
+  // Please could you let me know your thoughts on the approach. Is there a better way I could be writing this?  
+
   describe('PUT /albums/{id}', () => {
     it('replaces the album and returns the updated record', async () => {
       const { status, body } = await request(app)
