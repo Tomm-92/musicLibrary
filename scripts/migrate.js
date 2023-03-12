@@ -1,4 +1,3 @@
-// scripts/migrate.js
 const { migrate } = require('postgres-migrations');
 const path = require('path');
 

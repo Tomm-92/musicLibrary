@@ -17,7 +17,7 @@ const createAlbum = async (req, res) => {
   }
 };
 
-const readAlbums = async (req, res) => {
+const readAlbums = async (_, res) => {
   try {
     const { rows } = await db.query('SELECT * FROM Albums');
     res.status(200).json(rows);
@@ -27,8 +27,8 @@ const readAlbums = async (req, res) => {
 };
 
 const readAlbumById = async (req, res) => {
+  const { id } = req.params;
   try {
-    const { id } = req.params;
     const {
       rows: [albums],
     } = await db.query('SELECT * FROM Albums WHERE id = $1', [id]);
@@ -57,9 +57,9 @@ const deleteAlbum = async (req, res) => {
 };
 
 const updatePut = async (req, res) => {
+  const { id } = req.params;
+  const { name, date, artistid } = req.body;
   try {
-    const { id } = req.params;
-    const { name, date, artistid } = req.body;
     const {
       rows: [album],
     } = await db.query(

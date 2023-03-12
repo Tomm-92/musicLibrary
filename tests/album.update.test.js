@@ -39,7 +39,7 @@ describe('Update Album', () => {
   });
 
   // Hi Stu, I have tried to set up this before each so I can test that the artistid foreign key can also be changed.
-  // Please could you let me know your thoughts on the approach. Is there a better way I could be writing this?  
+  // Please could you let me know your thoughts on the approach. Is there a better way I could be writing this?
 
   describe('PUT /albums/{id}', () => {
     it('replaces the album and returns the updated record', async () => {
@@ -48,7 +48,7 @@ describe('Update Album', () => {
         .send({
           name: 'something different',
           date: 2000,
-          artistid: artists[1].id
+          artistid: artists[1].id,
         });
 
       expect(status).to.equal(200);
@@ -57,7 +57,7 @@ describe('Update Album', () => {
         id: album.id,
         name: 'something different',
         date: 2000,
-        artistid: artists[1].id
+        artistid: artists[1].id,
       });
     });
     it('returns a 404 if the album does not exist', async () => {
@@ -66,39 +66,39 @@ describe('Update Album', () => {
       expect(status).to.equal(404);
       expect(body.message).to.equal('album 123 does not exist');
     });
+  });
 
-    describe('PATCH /albums/{id}', () => {
-      it('updates the album and returns the updated record', async () => {
-        const { status, body } = await request(app)
-          .patch(`/albums/${album.id}`)
-          .send({
-            name: 'something different',
-            date: 2000,
-            artistid: artists[1].id
-          });
-
-        expect(status).to.equal(200);
-
-        expect(body).to.deep.equal({
-          id: album.id,
+  describe('PATCH /albums/{id}', () => {
+    it('updates the album and returns the updated record', async () => {
+      const { status, body } = await request(app)
+        .patch(`/albums/${album.id}`)
+        .send({
           name: 'something different',
           date: 2000,
-          artistid: artists[1].id
+          artistid: artists[1].id,
         });
-      });
 
-      it('returns a 404 if the album does not exist', async () => {
-        const { status, body } = await request(app)
-          .patch('/albums/999999999')
-          .send({
-            name: 'something different',
-            date: 2000,
-            artistid: artists[1].id
-          });
+      expect(status).to.equal(200);
 
-        expect(status).to.equal(404);
-        expect(body.message).to.equal('album 999999999 does not exist');
+      expect(body).to.deep.equal({
+        id: album.id,
+        name: 'something different',
+        date: 2000,
+        artistid: artists[1].id,
       });
+    });
+
+    it('returns a 404 if the album does not exist', async () => {
+      const { status, body } = await request(app)
+        .patch('/albums/999999999')
+        .send({
+          name: 'something different',
+          date: 2000,
+          artistid: artists[1].id,
+        });
+
+      expect(status).to.equal(404);
+      expect(body.message).to.equal('album 999999999 does not exist');
     });
   });
 });
