@@ -1,15 +1,29 @@
 const express = require('express');
+const path = require('path');
 const artistRouter = require('./routes/artist');
 const albumRouter = require('./routes/albums');
+const swaggerJsdoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
 
 const app = express();
 
 app.use(express.json());
 
+const options = {
+    swaggerDefinition: {
+      info: {
+        title: "My MusicLibrary",
+        version: "1.0.0",
+        description: "My API for interacting with my Postgres musicLibrary",
+      },
+    },
+    apis: [path.join(__dirname, './routes/*.js')],
+  };
+  const swaggerSpecs = swaggerJsdoc(options);
+
 app.use('/artists', artistRouter);
 app.use('/artists', albumRouter);
 app.use('/albums', albumRouter);
-
-// The problem with this is that you have created all the album endpoints off the /artists route as well as off the /albums route/ You only want the POST request for albums off the artists route /artists/:id/albums. So I was able to create an album entry by using /artists/:is/albums and /albums/:id/albums
+app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 
 module.exports = app;
