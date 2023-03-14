@@ -112,7 +112,7 @@ router.delete('/:id', albumsController.deleteAlbum);
  *          schema:
  *              type: number
  *          required: true
- *          description: ID of album artist
+ *          description: ID of album
  *        - in: body
  *          name: album
  *          description: Album to add to database
@@ -155,7 +155,7 @@ router.put('/:id', albumsController.updatePut);
  *          schema:
  *              type: number
  *          required: true
- *          description: ID of album artist
+ *          description: ID of album
  *        - in: body
  *          name: album
  *          description: Album to add to database
