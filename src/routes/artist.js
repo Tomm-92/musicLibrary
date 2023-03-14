@@ -48,27 +48,47 @@ router.post('/', artistController.createArtist);
 
 
 router.get('/', artistController.read);
-router.get('/:id', artistController.readById);
-router.put('/:id', artistController.updateArtist);
-
 
 /**
  * @swagger
- * /artists:
- *  patch:
+ * /artists/{artistId}:
+ *  get:
  *      tags:
  *          - artists
- *      description: Update an artist by ID
+ *      description: Find an artist by ID
  *      parameters:
  *        - in: path
- *          name: artist ID
+ *          name: artistId
+ *          schema:
+ *              type: number
+ *          required: true
+ *          description: ID of artist to find
+ *      responses:
+ *          200:
+ *              description: ID matches an artist in database
+ *          404:
+ *              description: no artist found with given ID
+ */
+
+router.get('/:id', artistController.readById);
+
+/**
+ * @swagger
+ * /artists/{artistId}:
+ *  put:
+ *      tags:
+ *          - artists
+ *      description: Update artist name and genre using their ID
+ *      parameters:
+ *        - in: path
+ *          name: artistId
  *          schema:
  *              type: integer
  *          required: true
- *          description: ID of the artist to be updated
+ *          description: ID of the artist to update
  *        - in: body
  *          name: artist
- *          description: The artist data to update
+ *          description: The artist data to be updated
  *          schema:
  *              type: object
  *              properties:
@@ -80,8 +100,48 @@ router.put('/:id', artistController.updateArtist);
  *            - name
  *            - genre
  *          example:
- *            name: Led Zeppellin 3
- *            year: 1970
+ *            name: Led Zeppelin III
+ *            genre: Rock
+ *      responses:
+ *          200:
+ *              description: The updated artist
+ *          404:
+ *              description: The artist could not be found
+ */
+
+
+router.put('/:id', artistController.updateArtist);
+
+
+/**
+ * @swagger
+ * /artists/{artistId}:
+ *  patch:
+ *      tags:
+ *          - artists
+ *      description: Update an artists name, genre or both using their ID
+ *      parameters:
+ *        - in: path
+ *          name: artistId
+ *          schema:
+ *              type: integer
+ *          required: true
+ *          description: ID of the artist to update
+ *        - in: body
+ *          name: artist
+ *          description: The artist data to be updated
+ *          schema:
+ *              type: object
+ *              properties:
+ *                  name:
+ *                      type: string
+ *                  genre:
+ *                      type: string
+ *          required:
+ *            - name
+ *          example:
+ *            name: Led Zeppelin III
+ *            genre: Rock
  *      responses:
  *          200:
  *              description: The updated artist
@@ -96,6 +156,8 @@ router.patch('/:id', artistController.updateArtistPatch);
  * @swagger
  * /artists/{id}:
  *  delete:
+ *      tags:
+ *          - artists
  *      description: Delete artist
  *      parameters:
  *        - in: path
@@ -110,7 +172,6 @@ router.patch('/:id', artistController.updateArtistPatch);
  *          404:
  *              description: Artist ID does not exist
  */
-
 
 router.delete('/:id', artistController.deleteArtist);
 
