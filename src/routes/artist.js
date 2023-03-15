@@ -150,14 +150,14 @@ router.patch('/:id', artistController.updateArtistPatch);
 
 /**
  * @swagger
- * /artists/{id}:
+ * /artists/{artistId}:
  *  delete:
  *      tags:
  *          - artists
  *      description: Delete artist
  *      parameters:
  *        - in: path
- *          name: id
+ *          name: artistId
  *          schema:
  *              type: string
  *          required: true
