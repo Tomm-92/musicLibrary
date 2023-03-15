@@ -41,11 +41,10 @@ router.post('/', artistController.createArtist);
  *      tags:
  *          - artists
  *      description: Returns all of the artists held in the database.
- *      responses: 
+ *      responses:
  *          200:
  *              description: All artists successfully retrieved
  */
-
 
 router.get('/', artistController.read);
 
@@ -109,9 +108,7 @@ router.get('/:id', artistController.readById);
  *              description: The artist could not be found
  */
 
-
 router.put('/:id', artistController.updateArtist);
-
 
 /**
  * @swagger
@@ -148,7 +145,6 @@ router.put('/:id', artistController.updateArtist);
  *          404:
  *              description: The artist could not be found
  */
-
 
 router.patch('/:id', artistController.updateArtistPatch);
 

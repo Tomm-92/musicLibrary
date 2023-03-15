@@ -26,4 +26,8 @@ app.use('/artists', albumRouter);
 app.use('/albums', albumRouter);
 app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 
+app.get('/', (req, res) => {
+  res.status(200).json('Welcome to my Music Library');
+});
+
 module.exports = app;
