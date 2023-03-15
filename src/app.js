@@ -4,10 +4,14 @@ const artistRouter = require('./routes/artist');
 const albumRouter = require('./routes/albums');
 const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
+const morgan = require("morgan"); 
+const helmet = require("helmet");
 
 const app = express();
 
 app.use(express.json());
+app.use(morgan("dev"));
+app.use(helmet());
 
 const options = {
     swaggerDefinition: {
